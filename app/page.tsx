@@ -63,16 +63,17 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-[#0d0f0d] text-[#ebdcd0] flex flex-col justify-between p-6 md:p-16 selection:bg-[#344434]">
       
-      {/* 📖 雜誌風頂部 Header — 已更換為妳的專屬引言 */}
-      <header className="max-w-4xl mx-auto w-full pt-8 pb-12 border-b border-[#1b241b] text-center md:text-left">
+      {/* 📖 雜誌風頂部 Header — 奢華感全置中排版 */}
+      <header className="max-w-4xl mx-auto w-full pt-12 pb-12 border-b border-[#1b241b] text-center flex flex-col items-center">
         <h1 className="font-serif italic font-light text-5xl md:text-6xl text-[#f0edf4] tracking-wide mb-3">
           Scene Sound Mixer
         </h1>
-        <p className="text-[10px] tracking-[0.4em] text-[#8ca38c] uppercase font-semibold mb-6">
+        <p className="text-[10px] tracking-[0.4em] text-[#8ca38c] uppercase font-semibold mb-8">
           Escape into another world
         </p>
-        <p className="font-serif italic text-sm text-[#8ca38c] font-light max-w-xl leading-relaxed mx-auto md:mx-0">
-          Every scene is built from layers of rain, wind, fire, cafés, nature, and music. Mix them your way.
+        <p className="font-serif italic text-sm md:text-base text-[#8ca38c] font-light max-w-2xl leading-relaxed opacity-90">
+          Every scene is built from layers of rain, wind, fire, cafés, nature, and music. 
+          <br className="hidden md:inline" /> Mix them your way.
         </p>
       </header>
 
