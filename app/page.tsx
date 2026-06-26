@@ -63,16 +63,16 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-[#0d0f0d] text-[#ebdcd0] flex flex-col justify-between p-6 md:p-16 selection:bg-[#344434]">
       
-      {/* 📖 雜誌風頂部 Header */}
+      {/* 📖 雜誌風頂部 Header — 已更換為妳的專屬引言 */}
       <header className="max-w-4xl mx-auto w-full pt-8 pb-12 border-b border-[#1b241b] text-center md:text-left">
-        <p className="text-[10px] tracking-[0.4em] text-[#6b7b6b] uppercase font-semibold mb-3">
-          The Soundscape Library — Vol. 01
-        </p>
-        <h1 className="font-serif italic font-light text-5xl md:text-6xl text-[#f0edf4] tracking-wide mb-4">
-          Atmospheric Sanctuaries
+        <h1 className="font-serif italic font-light text-5xl md:text-6xl text-[#f0edf4] tracking-wide mb-3">
+          Scene Sound Mixer
         </h1>
-        <p className="font-serif italic text-sm text-[#8ca38c] font-light max-w-xl leading-relaxed">
-          A curated collection of quiet spaces. Click on a portal to design your personal soundtrack, layer craftsmanship sound, and slow down time.
+        <p className="text-[10px] tracking-[0.4em] text-[#8ca38c] uppercase font-semibold mb-6">
+          Escape into another world
+        </p>
+        <p className="font-serif italic text-sm text-[#8ca38c] font-light max-w-xl leading-relaxed mx-auto md:mx-0">
+          Every scene is built from layers of rain, wind, fire, cafés, nature, and music. Mix them your way.
         </p>
       </header>
 
