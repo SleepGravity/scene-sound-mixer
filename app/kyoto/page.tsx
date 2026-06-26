@@ -139,12 +139,13 @@ export default function KyotoPage() {
   );
 }
 
-// 🎛️ 時尚拉桿組件渲染函數（內嵌極細軌道與細緻銀點樣式）
+// 🎛️ 時尚拉桿組件渲染函數（已優化行動端觸控與垂直間距，兼顧跨裝置美感）
 function mapChannels(list: any[], volumes: any, onChange: any) {
   return list.map((ch) => {
     const currentVal = volumes[ch.id];
     return (
-      <div key={ch.id} className="flex flex-col gap-2 group">
+      // 1. 【優化】把間距從 gap-2 微調大到 gap-3，並增加拉桿彼此的垂直間距，防止手指誤觸隔壁
+      <div key={ch.id} className="flex flex-col gap-3 group mb-2">
         <div className="flex justify-between items-center">
           <span className="text-xs text-[#ebdcd0] font-light tracking-wide group-hover:text-[#f0edf4] transition-colors duration-300">
             {ch.title}
@@ -153,7 +154,8 @@ function mapChannels(list: any[], volumes: any, onChange: any) {
             {currentVal.toString().padStart(3, '0')}
           </span>
         </div>
-        <div className="relative w-full h-4 flex items-center">
+        {/* 2. 【優化】將點擊觸控熱區高度從 h-4 提升到 h-6，手指更好抓，但視覺細線保持不變 */}
+        <div className="relative w-full h-6 flex items-center">
           {/* 客製化時尚拉桿樣式 */}
           <input 
             type="range" 
@@ -161,10 +163,13 @@ function mapChannels(list: any[], volumes: any, onChange: any) {
             max="100" 
             value={currentVal} 
             onChange={(e) => onChange(ch.id, parseInt(e.target.value))}
+            // 3. 【核心優化】手機端（預設）點點放大至 w-5 h-5 (20px)，電腦端 (md:) 自動還原成精緻的 w-2.5 h-2.5
             className="w-full h-[1px] bg-[#222a22] appearance-none outline-none cursor-pointer z-10
               [&::-webkit-slider-thumb]:appearance-none 
-              [&::-webkit-slider-thumb]:w-2.5 
-              [&::-webkit-slider-thumb]:h-2.5 
+              [&::-webkit-slider-thumb]:w-5 
+              [&::-webkit-slider-thumb]:h-5 
+              md:[&::-webkit-slider-thumb]:w-2.5 
+              md:[&::-webkit-slider-thumb]:h-2.5 
               [&::-webkit-slider-thumb]:rounded-full 
               [&::-webkit-slider-thumb]:bg-[#e4ded5] 
               [&::-webkit-slider-thumb]:shadow-[0_0_0_0px_rgba(196,212,196,0.15)]
@@ -173,8 +178,10 @@ function mapChannels(list: any[], volumes: any, onChange: any) {
               hover:[&::-webkit-slider-thumb]:bg-[#ffffff]
               hover:[&::-webkit-slider-thumb]:shadow-[0_0_0_6px_rgba(196,212,196,0.1)]
               
-              [&::-moz-range-thumb]:w-2.5 
-              [&::-moz-range-thumb]:h-2.5 
+              [&::-moz-range-thumb]:w-5 
+              [&::-moz-range-thumb]:h-5 
+              md:[&::-moz-range-thumb]:w-2.5 
+              md:[&::-moz-range-thumb]:h-2.5 
               [&::-moz-range-thumb]:border-0
               [&::-moz-range-thumb]:rounded-full 
               [&::-moz-range-thumb]:bg-[#e4ded5]
