@@ -30,11 +30,42 @@ export default function KyotoPage() {
       audioRefs.current[id] = audio;
     });
 
-    return (
+    return () => {
+      channels.forEach((id) => {
+        audioRefs.current[id]?.pause();
+      });
+    };
+  }, []);
+
+  const handleVolumeChange = async (id: string, val: number) => {
+    setVolumes(prev => ({ ...prev, [id]: val }));
+    const audio = audioRefs.current[id];
+    
+    if (audio) {
+      if (val > 0 && audio.paused) {
+        try {
+          await audio.play();
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      audio.volume = val / 100;
+    }
+  };
+
+  const channelList = [
+    { id: 'rain', title: '🌧 Rain — Courtyard Ambience' },
+    { id: 'pouring-and-drinking-tea', title: '🍵 Tea — Matcha Ritual' },
+    { id: 'book-page-turn', title: '📖 Paper — Washi Pages' },
+    { id: 'tibetan-bell', title: '🔔 Bell — Temple Distance' },
+    { id: 'koto-and-shamisen-loop', title: '🎵 Music — Shamisen Ensemble' }
+  ];
+
+  return (
     <div className="min-h-screen bg-[#fcfaf7] text-[#242b24] flex flex-col items-center justify-between p-8 md:p-12 selection:bg-[#ebdcd0]">
       
       {/* Header Section */}
-      <header className="text-center z-10 max-w-2xl">
+      <header className="text-center z-10 max-w-2xl flex flex-col items-center">
         <Link href="/" className="font-serif italic text-sm text-[#5c6b5c] no-underline border-b border-dashed border-[#5c6b5c] inline-block mb-6 hover:text-[#242b24] hover:border-[#242b24] transition-colors tracking-wide">
           ← Return to Library
         </Link>
@@ -54,12 +85,12 @@ export default function KyotoPage() {
       {/* 中間區塊：插畫與控制面板 */}
       <div className="w-full max-w-5xl flex flex-col md:flex-row items-center justify-center gap-16 my-8 z-10">
         
-        {/* 🎨 左側：圓窗插畫（在外層加上柔和陰影，更有立體任意門感） */}
-        <div className="relative w-72 h-72 flex items-center justify-center overflow-hidden rounded-full shadow-lg bg-[#f4f0ea]">
-          <div className="absolute w-56 h-56 bg-[#de7a3b] rounded-full blur-[60px] opacity-10"></div>
+        {/* 🎨 左側：圓窗插畫改為清爽和風色調 */}
+        <div className="relative w-72 h-72 flex items-center justify-center overflow-hidden rounded-full shadow-md bg-[#f4f0ea]">
+          <div className="absolute w-56 h-56 bg-[#de7a3b] rounded-full blur-[60px] opacity-15"></div>
           
           <svg className="w-full h-full relative z-10" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="100" cy="100" r="75" fill="#f4f0ea" />
+            <circle cx="100" cy="100" r="75" fill="#fcfaf7" />
             <g clipPath="url(#window-clip)">
               <rect x="20" y="20" width="160" height="160" fill="#e4ded5" />
               <path d="M15 125 C 45 100, 75 120, 105 105 C 135 90, 155 110, 185 100 L 185 185 L 15 185 Z" fill="#c4d4c4" />
@@ -85,7 +116,7 @@ export default function KyotoPage() {
           </svg>
         </div>
 
-        {/* 右側：🎛️ 調音面板（文字加深，拉桿軌道更清晰） */}
+        {/* 右側：🎛️ 調音面板 */}
         <main className="w-full max-w-sm flex flex-col gap-6">
           <div className="text-[10px] tracking-[0.25em] text-[#5c6b5c] font-medium uppercase border-b border-[#ebdcd0] pb-2">
             🎛️ Sound Layers
@@ -104,4 +135,58 @@ export default function KyotoPage() {
       </footer>
     </div>
   );
+}
+
+// 🎛️ 溫潤燕麥風好滑拉桿
+function mapChannels(list: any[], volumes: any, onChange: any) {
+  return list.map((ch) => {
+    const currentVal = volumes[ch.id];
+    return (
+      <div key={ch.id} className="flex flex-col gap-3 group mb-2">
+        <div className="flex justify-between items-center">
+          <span className="text-xs text-[#242b24] font-light tracking-wide group-hover:text-[#5c6b5c] transition-colors duration-300">
+            {ch.title}
+          </span>
+          <span className="font-mono text-[11px] text-[#7c6a5c] tracking-wider">
+            {currentVal.toString().padStart(3, '0')}
+          </span>
+        </div>
+        <div className="relative w-full h-6 flex items-center">
+          <input 
+            type="range" 
+            min="0" 
+            max="100" 
+            value={currentVal} 
+            onChange={(e) => onChange(ch.id, parseInt(e.target.value))}
+            className="w-full h-[1px] bg-[#ebdcd0] appearance-none outline-none cursor-pointer z-10
+              [&::-webkit-slider-thumb]:appearance-none 
+              [&::-webkit-slider-thumb]:w-5 
+              [&::-webkit-slider-thumb]:h-5 
+              md:[&::-webkit-slider-thumb]:w-2.5 
+              md:[&::-webkit-slider-thumb]:h-2.5 
+              [&::-webkit-slider-thumb]:rounded-full 
+              [&::-webkit-slider-thumb]:bg-[#8c6a4f] 
+              [&::-webkit-slider-thumb]:transition-[all_0.2s_ease]
+              hover:[&::-webkit-slider-thumb]:scale-125
+              hover:[&::-webkit-slider-thumb]:bg-[#242b24]
+              
+              [&::-moz-range-thumb]:w-5 
+              [&::-moz-range-thumb]:h-5 
+              md:[&::-moz-range-thumb]:w-2.5 
+              md:[&::-moz-range-thumb]:h-2.5 
+              [&::-moz-range-thumb]:border-0
+              [&::-moz-range-thumb]:rounded-full 
+              [&::-moz-range-thumb]:bg-[#8c6a4f]
+              hover:[&::-moz-range-thumb]:scale-125
+              hover:[&::-moz-range-thumb]:bg-[#242b24]"
+          />
+          {/* 已填滿進度的發光高亮細軌道 */}
+          <div 
+            className="absolute left-0 top-1/2 -translate-y-1/2 h-[1px] bg-[#5c6b5c] opacity-80 pointer-events-none transition-all duration-75"
+            style={{ width: `${currentVal}%` }}
+          />
+        </div>
+      </div>
+    );
+  });
 }
