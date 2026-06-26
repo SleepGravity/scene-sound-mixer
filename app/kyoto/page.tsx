@@ -82,14 +82,14 @@ export default function KyotoPage() {
         </p>
       </header>
 
-      {/* 中間區塊：插畫與控制面板 */}
-      <div className="w-full max-w-5xl flex flex-col md:flex-row items-center justify-center gap-16 my-8 z-10">
+{/* 中間區塊：插畫與控制面板 */}
+      <div className="w-full max-w-5xl flex flex-col md:flex-row items-center justify-center gap-12 md:gap-16 my-8 z-10">
         
-        {/* 🎨 左側：圓窗插畫改為清爽和風色調 */}
-        <div className="relative w-72 h-72 flex items-center justify-center overflow-hidden rounded-full shadow-md bg-[#f4f0ea]">
-          <div className="absolute w-56 h-56 bg-[#de7a3b] rounded-full blur-[60px] opacity-15"></div>
+        {/* 🎨 左側：圓窗插畫（等高平衡版：大幅提升桌機尺寸，與右側面板完美對等） */}
+        <div className="relative w-72 h-72 md:w-[460px] md:h-[460px] flex items-center justify-center overflow-hidden rounded-full shadow-md bg-[#f4f0ea] transition-all duration-500">
+          <div className="absolute w-72 h-72 bg-[#de7a3b] rounded-full blur-[80px] opacity-15"></div>
           
-          <svg className="w-full h-full relative z-10" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg className="w-full h-full relative z-10 p-2 md:p-4" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="100" cy="100" r="75" fill="#fcfaf7" />
             <g clipPath="url(#window-clip)">
               <rect x="20" y="20" width="160" height="160" fill="#e4ded5" />
