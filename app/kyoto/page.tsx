@@ -137,21 +137,31 @@ export default function KyotoPage() {
   );
 }
 
-// 🎛️ 溫潤燕麥風好滑拉桿
+// 🎛️ 高級感底框調音面板（拿掉 Emoji，改用字體留白與獨立幾何襯底設計）
 function mapChannels(list: any[], volumes: any, onChange: any) {
   return list.map((ch) => {
     const currentVal = volumes[ch.id];
+    
+    // 將原本的標題文字拆開，去掉前端的 Emoji，只保留優雅的純文字
+    const pureTitle = ch.title.replace(/[\u2300-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDC00-\uDFFF]/g, '').trim();
+
     return (
-      <div key={ch.id} className="flex flex-col gap-3 group mb-2">
+      <div 
+        key={ch.id} 
+        className="flex flex-col gap-2.5 p-4 mb-1 bg-[#f5f1ea] border border-[#e8e2d5] rounded-lg transition-all duration-300 hover:border-[#cbd5e1] hover:bg-[#f2ede4] shadow-[0_1px_3px_rgba(0,0,0,0.02)]"
+      >
+        {/* 頂部文字排版：英文字型加上輕微的大寫/字距微調 */}
         <div className="flex justify-between items-center">
-          <span className="text-xs text-[#242b24] font-light tracking-wide group-hover:text-[#5c6b5c] transition-colors duration-300">
-            {ch.title}
+          <span className="text-[11px] text-[#242b24] font-medium tracking-wider uppercase opacity-90">
+            {pureTitle}
           </span>
-          <span className="font-mono text-[11px] text-[#7c6a5c] tracking-wider">
+          <span className="font-mono text-[10px] text-[#8c6a4f] tracking-widest bg-[#ebdcd0] bg-opacity-40 px-1.5 py-0.5 rounded font-light">
             {currentVal.toString().padStart(3, '0')}
           </span>
         </div>
-        <div className="relative w-full h-6 flex items-center">
+
+        {/* 底部的極細拉桿軌道 */}
+        <div className="relative w-full h-5 flex items-center">
           <input 
             type="range" 
             min="0" 
